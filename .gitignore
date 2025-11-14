@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/MiniSearchEngineForLocalTextFiles/MiniSearchEngineForLocalTextFiles.sln
+/MiniSearchEngineForLocalTextFiles/MiniSearchEngineForLocalTextFiles.vcxproj
+/MiniSearchEngineForLocalTextFiles/MiniSearchEngineForLocalTextFiles.vcxproj.filters
