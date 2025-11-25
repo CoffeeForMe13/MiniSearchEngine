@@ -10,3 +10,8 @@ void Indexer::addDocument(const std::string& filepath, const std::string& conten
     }
     
 }
+
+const Indexer::InvertedIndex& Indexer::getIndex() const
+{
+    return index_;
+}
