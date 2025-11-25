@@ -1,5 +1,7 @@
 #include "Indexer.h"
 
+#include <sstream>
+
 void Indexer::addDocument(const std::string& filepath, const std::string& content)
 {
     std::vector<std::string> words = tokenize(content);
@@ -14,4 +16,20 @@ void Indexer::addDocument(const std::string& filepath, const std::string& conten
 const Indexer::InvertedIndex& Indexer::getIndex() const
 {
     return index_;
+}
+
+std::vector<std::string> Indexer::tokenize(const std::string& text) const
+{
+    std::stringstream ss(text);
+    std::string word;
+    std::vector<std::string> result;
+
+    while (ss >> word)
+    {
+        std::string norm = normalize(word);
+        if (!norm.empty())
+            result.push_back(norm);
+    }
+
+    return result;
 }
