@@ -33,3 +33,16 @@ std::vector<std::string> Indexer::tokenize(const std::string& text) const
 
     return result;
 }
+
+std::string Indexer::normalize(const std::string& word) const
+{
+    std::string cleaned;
+
+    for (char c : word)
+    {
+        if (std::isalnum(static_cast<unsigned char>(c)))
+            cleaned += std::tolower(c);
+    }
+    
+    return cleaned;
+}
