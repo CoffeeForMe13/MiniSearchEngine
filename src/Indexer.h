@@ -12,6 +12,8 @@ public:
 	void addDocument(const std::string& filePath, const std::string& content);
 	const InvertedIndex& getIndex() const;
 
+	// for testing
+	friend int main();
 private:
 	InvertedIndex index_;
 
