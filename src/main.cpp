@@ -23,12 +23,21 @@ int main()
 
     std::cout << indexer.normalize(word) << std::endl;
 
+    std::cout << std::endl;
+
     /*****************************
      * Test tokenize() method
      *****************************/
     /* *********** 1 *********** */
-    
-    
+    std::string text = "carte funciara.txt";
+
+    auto tokens = indexer.tokenize(text);
+
+    for (auto token : tokens)
+    {
+        std::cout << token << std::endl;
+    }
+
     std::cout << std::endl;
 
     /*****************************
