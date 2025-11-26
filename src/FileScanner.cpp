@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <iostream>
+#include <fstream>
 
 FileScanner::FileScanner(const std::string& directory)
     : directory_ {directory}
@@ -25,6 +26,21 @@ std::vector<std::string> FileScanner::listTextFiles() const
     }
 
     return files;
+}
+
+std::string FileScanner::readFile(const std::string& filepath) const
+{
+    std::ifstream file(filepath);
+
+    if (!file.is_open())
+    {
+        throw std::runtime_error("Failed to open file: " + filepath);
+    }
+
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+
+    return buffer.str();
 }
 
 FileScanner::~FileScanner()
