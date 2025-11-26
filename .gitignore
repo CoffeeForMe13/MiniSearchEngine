@@ -419,3 +419,7 @@ FodyWeavers.xsd
 /MiniSearchEngineForLocalTextFiles/MiniSearchEngineForLocalTextFiles.sln
 /MiniSearchEngineForLocalTextFiles/MiniSearchEngineForLocalTextFiles.vcxproj
 /MiniSearchEngineForLocalTextFiles/MiniSearchEngineForLocalTextFiles.vcxproj.filters
+.vscode/tasks.json
+.vscode/
+build/
+src/Data/
