@@ -12,6 +12,21 @@ FileScanner::FileScanner(const std::string& directory)
     }
 }
 
+std::vector<std::string> FileScanner::listTextFiles() const
+{
+    std::vector<std::string> files;
+
+    for (const auto& f : std::filesystem::directory_iterator(directory_))
+    {
+        if (f.is_regular_file() && f.path().extension() == ".txt")
+        {
+            files.push_back(f.path().string());
+        }
+    }
+
+    return files;
+}
+
 FileScanner::~FileScanner()
 {
 }
