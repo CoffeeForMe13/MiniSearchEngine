@@ -44,7 +44,20 @@ int main()
      * Test addDocument() method
      *****************************/
     /* *********** 1 *********** */
-    
+    std::string filepath = "D:\\git\\TheProject\\Workspace\\ProjectName\\src\\Data\\file.txt";
+    std::string content = "This is the content of a document";
+    indexer.addDocument(filepath, content);
+
+    // Iterate through the map
+    for (const auto& pair : indexer.index_)
+    {
+        // pair.first is the key
+        // pair.second is the value
+        for (const auto& element : pair.second)
+        {
+            std::cout << "Key: " << pair.first << ", Value: " << element << std::endl;
+        }
+    }
     
     std::cout << std::endl;
 
