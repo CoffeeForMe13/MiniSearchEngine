@@ -17,6 +17,18 @@ void SearchEngine::buildIndex()
     }
 }
 
+std::vector<std::string> SearchEngine::search(const std::string &query) const
+{
+    auto& index = indexer_.getIndex();
+
+    std::string normalized = normalize(query);
+
+    if (index.count(normalized) == 0)
+        return {};
+
+    return index.at(normalized);
+}
+
 SearchEngine::~SearchEngine()
 {
 }
