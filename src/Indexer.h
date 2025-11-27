@@ -16,6 +16,5 @@ private:
 	InvertedIndex index_;
 
 	std::vector<std::string> tokenize(const std::string& text) const;
-	std::string normalize(const std::string& word) const;
 
 };
