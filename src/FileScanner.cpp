@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 FileScanner::FileScanner(const std::string& directory)
     : directory_ {directory}
