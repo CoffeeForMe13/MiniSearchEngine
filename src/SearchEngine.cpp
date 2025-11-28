@@ -51,3 +51,21 @@ std::vector<std::string> SearchEngine::search(const std::string &query) const
 SearchEngine::~SearchEngine()
 {
 }
+
+std::vector<std::string> SearchEngine::searchPhrase(const std::vector<std::string> &words) const
+{
+    if (words.empty())
+        return {};
+
+    const auto& positionalIndex = indexer_.getPositionalIndex();
+
+    if (!positionalIndex.count(words.at(0)))
+        return {};
+
+    std::vector<std::string> results;
+    for (const auto& [filepath, _] : positionalIndex.at(words.at(0)))
+        if (containsPhrase(words, filepath))
+            results.push_back(filepath);
+    
+    return results;
+}
