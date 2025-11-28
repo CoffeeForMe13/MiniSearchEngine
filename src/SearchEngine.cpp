@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <sstream>
 
 #include "SearchEngine.h"
@@ -50,6 +51,48 @@ std::vector<std::string> SearchEngine::search(const std::string &query) const
 
 SearchEngine::~SearchEngine()
 {
+}
+
+bool SearchEngine::containsPhrase(
+    const std::vector<std::string> &phraseWords, 
+    const std::string& filepath) const
+{
+    const auto& positionalIndex = indexer_.getPositionalIndex();
+
+    std::unordered_map<std::string, std::vector<int>> positions;
+
+    for (const auto& word : phraseWords)
+    {
+        if (!positionalIndex.count(word))
+            return false;
+        if (!positionalIndex.at(word).count(filepath))
+            return false;
+
+        positions[word] = positionalIndex.at(word).at(filepath);
+    }
+
+    const std::vector<int>& firstWordPositions = positions.at(phraseWords.at(0));
+
+    for (int startPos : firstWordPositions)
+    {
+        bool match = true;
+
+        for (int i = 1; i < phraseWords.size(); i++)
+        {
+            const auto& posList = positions.at(phraseWords.at(i));
+
+            if (!std::binary_search(posList.begin(), posList.end(), startPos + i))
+            {
+                match = false;
+                break;
+            }
+        }
+
+        if (match) 
+            return true;
+    }
+
+    return false;
 }
 
 std::vector<std::string> SearchEngine::searchPhrase(const std::vector<std::string> &words) const
