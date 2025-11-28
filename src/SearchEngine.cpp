@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "SearchEngine.h"
 #include "utils.h"
 
@@ -19,6 +21,23 @@ void SearchEngine::buildIndex()
 
 std::vector<std::string> SearchEngine::search(const std::string &query) const
 {
+    std::stringstream ss(query);
+    std::string word;
+    std::vector<std::string> words;
+    int wordCount {0};
+
+    while (ss >> word)
+    {
+        std::string norm = normalize(word);
+        if (!norm.empty())
+        {
+            words.push_back(norm);
+            wordCount++;
+        }
+    }
+    if(wordCount > 1)
+        return searchPhrase(words);
+
     auto& index = indexer_.getIndex();
 
     std::string normalized = normalize(query);
