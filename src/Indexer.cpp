@@ -22,6 +22,11 @@ const Indexer::InvertedIndex& Indexer::getIndex() const
     return index_;
 }
 
+const Indexer::PositionalIndex& Indexer::getPositionalIndex() const
+{
+    return positionalIndex_;
+}
+
 std::vector<std::string> Indexer::tokenize(const std::string& text) const
 {
     std::stringstream ss(text);
