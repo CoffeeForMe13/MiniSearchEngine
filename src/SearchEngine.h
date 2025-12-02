@@ -20,4 +20,11 @@ private:
     FileScanner& scanner_;
     Indexer& indexer_;
 
+    std::vector<std::string> searchPhrase(const std::vector<std::string>& words) const;
+    bool containsPhrase(
+        const std::vector<std::string>& phraseWords,
+        const std::string& filepath
+    ) const;
+    
+
 };

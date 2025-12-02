@@ -7,9 +7,12 @@ void Indexer::addDocument(const std::string& filepath, const std::string& conten
 {
     std::vector<std::string> words = tokenize(content);
 
-    for (const auto& word : words)
+    for (size_t i = 0; i < words.size(); i++)
     {
+        const auto& word = words.at(i);
         index_[word].push_back(filepath);
+
+        positionalIndex_[word][filepath].push_back(i);
     }
     
 }
@@ -17,6 +20,11 @@ void Indexer::addDocument(const std::string& filepath, const std::string& conten
 const Indexer::InvertedIndex& Indexer::getIndex() const
 {
     return index_;
+}
+
+const Indexer::PositionalIndex& Indexer::getPositionalIndex() const
+{
+    return positionalIndex_;
 }
 
 std::vector<std::string> Indexer::tokenize(const std::string& text) const
