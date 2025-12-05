@@ -53,20 +53,42 @@ SearchEngine::~SearchEngine()
 {
 }
 
-bool SearchEngine::containsPhrase(
+std::vector<std::string> SearchEngine::searchPhrase(const std::vector<std::string> &words) const
+{
+    if (words.empty())
+        return {};
+
+    const auto& positionalIndex = indexer_.getPositionalIndex();
+
+    if (!positionalIndex.count(words.at(0)))
+        return {};
+
+    std::vector<std::string> results;
+    for (const auto& [filepath, _] : positionalIndex.at(words.at(0)))
+    {
+        const auto& foundResults = findPhrase(words, filepath);
+        if (!foundResults.empty())
+            move(foundResults.begin(), foundResults.end(), std::back_inserter(results));
+    }
+    
+    return results;
+}
+
+std::vector<std::string> SearchEngine::findPhrase(
     const std::vector<std::string> &phraseWords, 
     const std::string& filepath) const
 {
     const auto& positionalIndex = indexer_.getPositionalIndex();
 
     std::unordered_map<std::string, std::vector<int>> positions;
+    std::vector<std::string> allMatches;
 
     for (const auto& word : phraseWords)
     {
         if (!positionalIndex.count(word))
-            return false;
+            return {};
         if (!positionalIndex.at(word).count(filepath))
-            return false;
+            return {};
 
         positions[word] = positionalIndex.at(word).at(filepath);
     }
@@ -89,26 +111,8 @@ bool SearchEngine::containsPhrase(
         }
 
         if (match) 
-            return true;
+            allMatches.push_back(filepath);
     }
 
-    return false;
-}
-
-std::vector<std::string> SearchEngine::searchPhrase(const std::vector<std::string> &words) const
-{
-    if (words.empty())
-        return {};
-
-    const auto& positionalIndex = indexer_.getPositionalIndex();
-
-    if (!positionalIndex.count(words.at(0)))
-        return {};
-
-    std::vector<std::string> results;
-    for (const auto& [filepath, _] : positionalIndex.at(words.at(0)))
-        if (containsPhrase(words, filepath))
-            results.push_back(filepath);
-    
-    return results;
+    return allMatches;
 }

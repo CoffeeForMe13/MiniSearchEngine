@@ -21,7 +21,7 @@ private:
     Indexer& indexer_;
 
     std::vector<std::string> searchPhrase(const std::vector<std::string>& words) const;
-    bool containsPhrase(
+    std::vector<std::string> findPhrase(
         const std::vector<std::string>& phraseWords,
         const std::string& filepath
     ) const;
