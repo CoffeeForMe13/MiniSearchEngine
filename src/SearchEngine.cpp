@@ -53,20 +53,21 @@ SearchEngine::~SearchEngine()
 {
 }
 
-bool SearchEngine::containsPhrase(
+std::vector<int> SearchEngine::returnPhrase(
     const std::vector<std::string> &phraseWords, 
     const std::string& filepath) const
 {
     const auto& positionalIndex = indexer_.getPositionalIndex();
 
     std::unordered_map<std::string, std::vector<int>> positions;
+    std::vector<int> allMatches;
 
     for (const auto& word : phraseWords)
     {
         if (!positionalIndex.count(word))
-            return false;
+            return {};
         if (!positionalIndex.at(word).count(filepath))
-            return false;
+            return {};
 
         positions[word] = positionalIndex.at(word).at(filepath);
     }
@@ -89,10 +90,10 @@ bool SearchEngine::containsPhrase(
         }
 
         if (match) 
-            return true;
+            allMatches.push_back(startPos);
     }
 
-    return false;
+    return allMatches;
 }
 
 std::vector<std::string> SearchEngine::searchPhrase(const std::vector<std::string> &words) const
